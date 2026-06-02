@@ -112,7 +112,7 @@ class EstudianteController extends Controller
 
         return response()->json([
             'message' => 'Estudiante creada exitosamente',
-            'musica' => $estudiante
+            'Estudiante' => $estudiante
         ], 200);
     }
 
