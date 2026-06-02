@@ -66,7 +66,7 @@ class EstudianteController extends Controller
     {
         $estudiante = Estudiante::find($id);
         if ($estudiante) {
-            return response()->json([$estudiante], 200);
+            return response()->json($estudiante, 200);
         } else {
             return response()->json(['message' => 'Estudiante no encontrada'], 404);
         }
@@ -90,7 +90,7 @@ class EstudianteController extends Controller
                 content: new OA\JsonContent(
                     properties: [
                         new OA\Property(property: 'message', type: 'string', example: 'Estudiante creada exitosamente'),
-                        new OA\Property(property: 'musica', ref: '#/components/schemas/Estudiante')
+                        new OA\Property(property: 'Estudiante', ref: '#/components/schemas/Estudiante')
                     ]
                 )
             ),
@@ -102,6 +102,14 @@ class EstudianteController extends Controller
     )]
     public function createEstudiante(Request $request)
     {
+
+    $request->validate([
+    'nombres' => 'required|string|max:255',
+    'apellidos' => 'required|string|max:255',
+    'cedula' => 'required|string|unique:estudiantes|max:10',
+    'correo' => 'required|email|unique:estudiantes|max:255',
+    'telefono' => 'required|string|max:20',
+]);
         $estudiante = new Estudiante();
         $estudiante->nombres = $request->nombres;
         $estudiante->apellidos = $request->apellidos;
@@ -159,6 +167,13 @@ class EstudianteController extends Controller
     )]
     public function updateEstudiante($id, Request $request)
     {
+    $request->validate([
+    'nombres' => 'required|string|max:255',
+    'apellidos' => 'required|string|max:255',
+    'cedula' => "required|string|unique:estudiantes,cedula,$id",
+    'correo' => "required|email|unique:estudiantes,correo,$id",
+    'telefono' => 'required|string|max:20',
+    ]);
         $estudiante = Estudiante::find($id);
         if ($estudiante) {
             $estudiante->nombres = $request->nombres;

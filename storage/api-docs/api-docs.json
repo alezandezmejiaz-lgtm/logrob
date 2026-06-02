@@ -62,7 +62,7 @@
                                             "type": "string",
                                             "example": "Estudiante creada exitosamente"
                                         },
-                                        "musica": {
+                                        "Estudiante": {
                                             "$ref": "#/components/schemas/Estudiante"
                                         }
                                     },
